@@ -1,0 +1,53 @@
+{
+    "users": {
+      "1": {
+        "company": {
+          "logo": "./pictures/th.jpg",
+          "heroProduct": "./pictures/th.jpg",
+          "contact": "123-456-7890",
+          "email": "info@company1.com",
+          "website": "www.company1.com",
+          "analystEmail": "analyst@company1.com"
+        },
+        "user": {
+          "backgroundPic": "./pictures/th.jpg",
+          "profilePic": "./pictures/47339.jpg",
+          "fullName": "Jogender Kota",
+          "designation": "Senior Project Manager",
+          "experiences": ["Product Development", "PayZapp", "HDFC", "DevOps/SRE/AI/ML & Automation"],
+          "aboutMe": "I am Jogender Kota, passionate, skilled, and enthusiastic about Product Development, DevOps principles, and tools...",
+          "contactsCount": 78
+        },
+        "meeting": {
+          "time": "10:00 - 11:00 AM",
+          "link": "http://meeting-link1.com",
+          "location": "Conference Room 02"
+        }
+      },
+      "2": {
+        "company": {
+          "logo": "./pictures/th.jpg",
+          "heroProduct": "./pictures/th.jpg",
+          "contact": "234-567-8901",
+          "email": "info@company2.com",
+          "website": "www.company2.com",
+          "analystEmail": "analyst@company2.com"
+        },
+        "user": {
+          "backgroundPic": "./pictures/th.jpg",
+          "profilePic": "./pictures/th.jpg",
+          "fullName": "Alice Doe",
+          "designation": "Project Manager",
+          "experiences": ["Software Development", "FinTech", "DevOps"],
+          "aboutMe": "I am Alice Doe, experienced in managing software development projects...",
+          "contactsCount": 45
+        },
+        "meeting": {
+          "time": "11:00 - 12:00 AM",
+          "link": "http://meeting-link2.com",
+          "location": "Conference Room 03"
+        }
+      }
+    }
+  }
+  
