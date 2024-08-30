@@ -1,18 +1,34 @@
 export type Company = {
 	id?: number;
-	companyName: string;
-	companyEmail: string;
+	name: string;
+	officialEmail: string;
 	pointOfContact: string;
 	address: string;
 	location: string;
-	// logo?: string; // Uncomment if needed
+	logo?: string; 
 	websiteUrl: string;
 	colorTheme: string;
-	// usp?: string; // Uncomment if needed
+	usp?: string; 
 	approved: boolean;
 	heroProduct: string;
 	analystEmail: string;
 };
+
+export type CompanyPostData = {
+	id?: number;
+	name: string;
+	officialEmail: string;
+	pointOfContact: string;
+	websiteUrl: string;
+};
+
+export const initialCompanyPostData: CompanyPostData = {
+    name: '',
+    officialEmail: '',
+    pointOfContact: '',
+    websiteUrl: ''
+};
+
 
 export interface ReviewData {
 	reviews: Review[];

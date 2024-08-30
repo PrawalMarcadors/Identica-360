@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import { CompanyForm } from '../CompanyForm/CompanyForm';
@@ -20,7 +20,6 @@ export const CompanyDetailsContainer = styled('div')`
 		width: 100%;
 	}
 
-	.styledImage,
 	.memberImage {
 		width: 100%;
 		max-width: 250px;
@@ -70,7 +69,7 @@ export const AdminHome: React.FC<AdminHomeProps> = ({ handleContinueClick, handl
 				return (
 					<CompanyDetailsContainer>
 						<div className="imageContainer">
-							<img src="/companybg1.png" alt="Company Details" className="styledImage" />
+							<img src="/companyOnboard1.png" alt="Company Details" className="styledImage" />
 						</div>
 						<div className="textContainer">
 							<h2 className="title">Company Details</h2>
@@ -92,13 +91,14 @@ export const AdminHome: React.FC<AdminHomeProps> = ({ handleContinueClick, handl
 					<CompanyForm
 						handleBack={handleBack}
 						setOnboardingType={setOnboardingType}
+						handleContinueClick={handleContinueClick}
 					/>
 				);
 			case Steps.THREE:
 				return (
 					<CompanyDetailsContainer>
 						<div className="imageContainer">
-							<img src="/companybg1.png" alt="Success" className="styledImage" />
+							<img src="/companyOnboard2.png" alt="Success" className="styledImage" />
 						</div>
 						<div className="textContainer">
 							<h2>Yay!</h2> Your company details have been added

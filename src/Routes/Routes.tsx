@@ -38,7 +38,9 @@ export const AuthenticatedRoutes: React.FC<RoutesProps> = ({onboardingType, setO
 
 	useEffect(() => {
 		console.log('Current Step:', currentStep);
-	}, [currentStep]);
+			
+		console.log(onboardingType);
+	}, []);
 
 	const handleBack = () => {
 		console.log('Before State Update:', currentStep);

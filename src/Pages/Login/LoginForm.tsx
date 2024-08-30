@@ -70,7 +70,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setOnboardingType }) => {
 							<h1>Hello!</h1>
 							<span className="sub-header">Welcome to Identica360</span>
 						</span>
-						<img src="/public/zetaLogo.png" alt="Zeta Logo" className="logo" />
+						<h2 className='product-name'>Identica360</h2>
 					</div>
 					<Form
 						form={form}

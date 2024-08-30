@@ -9,6 +9,12 @@ export const LoginFormWrapper = styled(Card)`
 		justify-content: center;
 	}
 
+	.product-name{
+		font-size: 2em;
+		margin: auto 0;
+		color: #1176BC;
+	}
+
 	.form-wrapper {
 		background-color: #fff;
 		padding: 20px;

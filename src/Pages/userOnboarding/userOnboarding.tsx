@@ -22,7 +22,7 @@ const UserOnboardingContent: React.FC<UserOnboardingContentProps> = ({
                 <CompanyDetailsContainer>
                     <div className="imageContainer">
                         <img
-                            src="/memberOnboardinginitail.png"
+                            src="/userOnboarding1.png"
                             alt="Company Details"
                             className="memberImage"
                         />
@@ -60,7 +60,7 @@ const UserOnboardingContent: React.FC<UserOnboardingContentProps> = ({
                 <CompanyDetailsContainer>
                     <div className="imageContainer">
                         <img
-                            src="/memberOnboarded.png"
+                            src="/userOnboarding2.png"
                             alt="Company Details"
                             className="memberImage"
                         />

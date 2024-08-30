@@ -14,7 +14,7 @@ import {
 	ProgressSegment,
 } from './CompanyForm.styled';
 import { hardcodedData } from '../CompanyDetail/utilities';
-import { Company } from '../types';
+import { Company, CompanyPostData, initialCompanyPostData } from '../types';
 import { CompanyMutationKeys } from '../../API/query-keys';
 import { AppService } from '../../Services/ServiceFile';
 import { RoutesPath } from '../../Routes/RoutesPath';
@@ -27,6 +27,7 @@ import TextArea from 'antd/es/input/TextArea';
 interface CompanyFormProps {
 	handleBack: () => void;
 	setOnboardingType: (type: OnboardingType) => void;
+	handleContinueClick: () => void;
 }
 
 enum FormStep {
@@ -41,22 +42,23 @@ const { Option } = Select;
 export const CompanyForm: React.FC<CompanyFormProps> = ({
 	handleBack,
 	setOnboardingType,
+	handleContinueClick,
 }) => {
 	const [currentStep, setCurrentStep] = useState<FormStep>(FormStep.BasicInfo);
-	const [companyData, setCompanyData] = useState<Company | null>({
-        id: 1,
-        companyName: "ABC Corporation",
-        companyEmail: "info@abccorp.com",
-        pointOfContact: "John Doe",
-        address: "123 Main Street",
-        location: "New York, NY",
-        websiteUrl: "https://www.abccorp.com",
-        colorTheme: "#336699",
-        approved: true,
-        heroProduct: "Product XYZ",
-        analystEmail: "analyst@abccorp.com"
-    });
-	const [viewOnly, setViewOnly] = useState<boolean>(companyData ? true : false);
+	// const [companyData, setCompanyData] = useState<Company | null>({
+	//     id: 1,
+	//     companyName: "ABC Corporation",
+	//     companyEmail: "info@abccorp.com",
+	//     pointOfContact: "John Doe",
+	//     address: "123 Main Street",
+	//     location: "New York, NY",
+	//     websiteUrl: "https://www.abccorp.com",
+	//     colorTheme: "#336699",
+	//     approved: true,
+	//     heroProduct: "Product XYZ",
+	//     analystEmail: "analyst@abccorp.com"
+	// });
+	const [viewOnly, setViewOnly] = useState<boolean>(false);
 	const [color, setColor] = useState<string>('#8000ff');
 	const { companyId } = useParams<{ companyId: string }>();
 	const [form] = Form.useForm();
@@ -83,35 +85,32 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({
 		},
 	});
 
-	useEffect(() => {
-		if (!companyId) {
-			return;
-		}
-		const data = hardcodedData.find((item) => item.companyId === companyId) as Company | undefined;
-		if (data) {
-			setCompanyData(data);
-			if (data.colorTheme) {
-				setColor(data.colorTheme);
-				form.setFieldsValue({ colorTheme: data.colorTheme });
-			}
-		}
-	}, [companyId, form]);
+	// useEffect(() => {
+	// 	if (!companyId) {
+	// 		return;
+	// 	}
+	// 	const data = hardcodedData.find((item) => item.companyId === companyId) as Company | undefined;
+	// 	if (data) {
+	// 		setCompanyData(data);
+	// 		if (data.colorTheme) {
+	// 			setColor(data.colorTheme);
+	// 			form.setFieldsValue({ colorTheme: data.colorTheme });
+	// 		}
+	// 	}
+	// }, [companyId, form]);
 
-	const onFinish = async (values: any) => {
-		const payload: Company = {
-			...companyData!,
-			...values,
-			colorTheme: color,
-		};
-
+	const onFinish = async (values: CompanyPostData) => {
+		const payload = values;
+		console.log(payload);
+	
 		try {
 			await createCompany.mutateAsync(payload);
-			// Proceed to next step after successful form submission
 			nextStep();
 		} catch (error) {
 			console.error('Error creating company:', error);
 		}
 	};
+	
 
 	const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newColor = e.target.value;
@@ -120,8 +119,10 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({
 	};
 
 	const memberOnboarding = () => {
-		navigate(RoutesPath.ADMIN_HOME);
+		console.log('1');
+
 		setOnboardingType(OnboardingType.MEMBER);
+		navigate(RoutesPath.ADMIN_HOME);
 	};
 
 	const nextStep = () => {
@@ -138,10 +139,16 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({
 		switch (currentStep) {
 			case FormStep.BasicInfo:
 				return (
-					<>
+					<StyledForm
+						form={form}
+						layout="vertical"
+						name="companyForm"
+						initialValues={initialCompanyPostData}
+						onFinish={onFinish}
+					>
 						<Form.Item
 							label="Company Name"
-							name="companyName"
+							name="name"
 							rules={[{ required: true, message: 'Please input the company name!' }]}
 						>
 							<Input disabled={viewOnly} />
@@ -164,7 +171,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({
 							</Form.Item>
 							<Form.Item
 								label="Company Email ID"
-								name="companyEmail"
+								name="officialEmail"
 								rules={[{ required: true, message: 'Please input the company email!' }]}
 							>
 								<Input type="email" disabled={viewOnly} />
@@ -189,20 +196,23 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({
 							name="colorTheme"
 							rules={[{ required: true, message: 'Please input the primary colour!' }]}
 						>
-							<Input type="color" disabled={viewOnly} onChange={handleColorChange} value={color}/>
+							<Input type="color" disabled={viewOnly} onChange={handleColorChange} value={color} />
 						</ColorFormItem>
-						<Form.Item label="Upload High-Resolution Company Logo" name="logo">
+						<Form.Item
+							label="Upload High-Resolution Company Logo"
+							// name="logo"
+						>
 							<Input type="file" suffix={<UploadOutlined />} disabled />
 						</Form.Item>
 						<ButtonGroup>
 							<Button type="primary" onClick={handleBack}>
 								Back
 							</Button>
-							<Button type="primary" onClick={nextStep}>
+							<Button type="primary" htmlType='submit'>
 								Continue
 							</Button>
 						</ButtonGroup>
-					</>
+					</StyledForm>
 				);
 
 			// Render other steps similarly using switch-case
@@ -346,7 +356,11 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({
 							<Button type="primary" onClick={prevStep}>
 								Back
 							</Button>
-							<Button type="primary" htmlType="submit">
+							<Button
+								type="primary"
+								// htmlType="submit"
+								onClick={handleContinueClick}
+							>
 								Continue
 							</Button>
 						</ButtonGroup>
@@ -367,22 +381,14 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({
 			</ProgressBarContainer>
 			<Heading>
 				Enter your business information here for a personalized setup{' '}
-				{companyData ? (
+				{/* {companyData ? (
 					<>
 						<FaPen onClick={() => setViewOnly(false)} className="icon-edit" title="Edit details" />
 						<FaUserPlus onClick={memberOnboarding}className="icon-edit" title="Onboard User" />
 					</>
-				) : null}
+				) : null} */}
 			</Heading>
-			<StyledForm
-				form={form}
-				layout="vertical"
-				name="companyForm"
-				initialValues={companyData || {}}
-				onFinish={onFinish}
-			>
-				{renderForm()}
-			</StyledForm>
+			{renderForm()}
 		</Container>
 	);
 };
